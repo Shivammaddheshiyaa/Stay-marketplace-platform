@@ -1,0 +1,115 @@
+<% layout('/layouts/boilerplate') -%>
+
+    <body>
+
+
+        <style>
+            #filters {
+                position: relative;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 2rem;
+        
+            }
+
+            .filter {
+                text-align: center;
+                opacity: 0.7;
+                margin-right: 2rem;
+                margin-top: 2rem;
+            }
+
+            .filter:hover {
+                opacity: 1;
+                cursor: pointer;
+            }
+
+
+
+             .filter p {
+                font-weight: 600;
+                font-size: 13px;
+            } 
+
+            @media (max-width: 992px) {
+        #filters {
+            flex-wrap: nowrap;        
+            overflow-x: auto;           
+        }
+
+        #filters::-webkit-scrollbar {
+            height: 6px;
+        }
+        #filters::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+    }
+
+
+        </style>
+
+        <div id="filters">
+            <div class="filter">
+                <i class="fa-solid fa-fire"></i>
+                <p>Trending</p>
+            </div>
+
+            <div class="filter">
+                <i class="fa-solid fa-mountain-sun"></i>
+                <p>Nature</p>
+            </div>
+
+            <div class="filter">
+                <i class="fa-solid fa-city"></i>
+                <p>City</p>
+            </div>
+
+            <div class="filter">
+                <i class="fa-solid fa-water"></i>
+                <p>Beach</p>
+            </div>
+
+            <div class="filter">
+                <i class="fa-solid fa-tree"></i>
+                <p>Camping</p>
+            </div>
+
+            <div class="filter">
+                <i class="fa-solid fa-person-skiing"></i>
+                <p>Ski</p>
+            </div>
+
+            <div class="filter">
+                <i class="fa-solid fa-landmark"></i>
+                <p>Historical</p>
+            </div>
+
+            <div class="filter">
+                <i class="fa-solid fa-mug-hot"></i>
+                <p>Relax</p>
+            </div>
+        </div>
+
+
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-1">
+            <% for(let listing of allListings) {%>
+                <a href="listings/<%= listing._id %>" class="listing-link">
+                    <div class="card col listing-card">
+                        <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image"
+                            style="height: 20rem;">
+                        <div class="card-img-overlay"></div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <b>
+                                    <%= listing.title %>
+                                </b> <br> &#8377; <%= listing.price %>/night
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                <% } %>
+        </div>
+
+
+    </body>

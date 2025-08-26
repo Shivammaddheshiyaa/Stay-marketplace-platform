@@ -1,0 +1,179 @@
+<% layout('/layouts/boilerplate') -%>
+ 
+<script>
+  const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
+</script>
+
+
+    <div class="row mt-3">
+        <div class="col-8 offset-2">
+            <h3>
+                <%= listing.title %>
+            </h3>
+        </div>
+        <div class="card col-6 offset-2 show-card listing-card">
+            <!-- <div class="card" style="width: 18rem;"> -->
+            <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image">
+            <div class="card-body">
+                <p class="card-text">
+                    <b>
+                        <%= listing.title %>
+                    </b> <br>
+
+                    owned by <%= listing.owner.username %>
+                        <br>
+                        <%= listing.description %> <br><br>
+                            &#8377;<%= listing.price%> <br>
+                                <%= listing.location %> <br>
+                                    <%= listing.country %>
+                </p>
+            </div>
+
+            <% if( currUser && currUser._id.equals(listing.owner._id)) { %>
+                <div class="btns">
+                    <br>
+                    <!-- <button class="btn btn-dark  offset-2 "> <a href="/listings/<%= listing._id %>/edit">Edit</a></button> -->
+                    <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark offset-2">Edit</a>
+
+                    <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+                        <button class="btn btn-dark offset-2">Delete</button>
+                    </form>
+                </div>
+                <% } %>
+
+
+                    <div class="col-12">
+                        <hr />
+                        <% if(currUser){ %>
+                            <h4 class="mb-3">Leave a Review</h4>
+                            <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate
+                                class="needs-validation">
+
+
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Rating</label>
+                                    <div class="star-rating-inline">
+                                        <!-- 5 star -->
+                                        <input type="radio" id="star5" name="review[rating]" value="5" />
+                                        <label for="star5" title="5 stars">&#9733;</label>
+
+                                        <!-- 4 star -->
+                                        <input type="radio" id="star4" name="review[rating]" value="4" />
+                                        <label for="star4" title="4 stars">&#9733;</label>
+
+                                        <!-- 3 star -->
+                                        <input type="radio" id="star3" name="review[rating]" value="3" />
+                                        <label for="star3" title="3 stars">&#9733;</label>
+
+                                        <!-- 2 star -->
+                                        <input type="radio" id="star2" name="review[rating]" value="2" />
+                                        <label for="star2" title="2 stars">&#9733;</label>
+
+                                        <!-- 👇 default selected star -->
+                                        <input type="radio" id="star1" name="review[rating]" value="1" checked />
+                                        <label for="star1" title="1 star">&#9733;</label>
+                                    </div>
+                                    <div class="form-text">Click a star to set your rating. Defaults to 1 if unchanged.
+                                    </div>
+                                </div>
+
+                                <style>
+                                    .star-rating-inline {
+                                        display: inline-flex;
+                                        flex-direction: row-reverse;
+                                        /* so clicking left fills stars properly */
+                                        font-size: 2rem;
+                                    }
+
+                                    .star-rating-inline input {
+                                        display: none;
+                                    }
+
+                                    .star-rating-inline label {
+                                        color: #ccc;
+                                        cursor: pointer;
+                                        transition: color 0.2s;
+                                    }
+
+                                    /* Highlight selected + all previous stars */
+                                    .star-rating-inline input:checked~label {
+                                        color: gold;
+                                    }
+
+                                    .star-rating-inline label:hover,
+                                    .star-rating-inline label:hover~label {
+                                        color: gold;
+                                    }
+                                </style>
+
+
+                                <!-- Comment -->
+                                <div class="mb-3">
+                                    <label for="comment" class="form-label fw-semibold">Comment</label>
+                                    <textarea name="review[comment]" id="comment" cols="30" rows="5"
+                                        class="form-control shadow-sm" placeholder="Write your review..."
+                                        required></textarea>
+                                </div>
+
+                                <!-- Button -->
+                                <button class="btn btn-primary w-100">Submit Review</button>
+                            </form>
+                            <% }%>
+
+                                <hr class="my-4" />
+
+                                <!-- Reviews Section -->
+                                <h5 class="mb-3">All Reviews</h5>
+                                <div class="row">
+                                    <% for (review of listing.reviews){ %>
+                                        <div class="col-md-6 mb-3"> <!-- half width -->
+                                            <div class="card shadow-sm border-0 h-100">
+                                                <div class="card-body">
+                                                    <h6 class="card-subtitle mb-2 text-muted">By: <b>
+                                                            <%= review.author.username %>
+                                                        </b></h6>
+                                                    <p class="card-text">
+                                                        <%= review.comment %>
+                                                    </p>
+                                                    <p class="card-text text-warning mb-0">
+                                                        <% for(let i=0; i<review.rating; i++){ %>
+                                                            ⭐
+                                                            <% } %>
+                                                    </p>
+                                                </div>
+                                                <form method="POST"
+                                                    action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+                                                    class="mb-3 mt-3">
+                                                    <button class="btn btn-sm btn-dark">Delete</button>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                </div>
+                    </div>
+        </div>
+        <div class="col-8 offset-2">
+            <h3>Where you'll be</h3>
+            <div id="map">
+                <script>
+                    let mapToken = "<%= process.env.MAP_TOKEN %>";
+                    mapboxgl.accessToken = mapToken;
+                    const map = new mapboxgl.Map({
+                        container: 'map', // container ID
+                         style: 'mapbox://styles/mapbox/streets-v12',
+                        center: coordinates, // starting position [lng, lat]. Note that lat must be set between -90 and 90
+                        zoom: 8 // starting zoom
+                    });
+
+                       console.log(coordinates);
+                       
+                    const marker = new mapboxgl.Marker({color:'red'})
+                        .setLngLat(coordinates)
+                        .addTo(map);
+                </script>
+            </div>
+            <br>
+        </div>
+    </div>
