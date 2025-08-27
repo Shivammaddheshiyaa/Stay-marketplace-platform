@@ -130,6 +130,7 @@ router.put("/:id", isLoggedIn, isOwner, upload.single('listing[image]'), wrapAsy
 router.delete("/:id",isLoggedIn,isOwner, wrapAsync(async (req, res) => {
     let { id } = req.params;
     let deleteListing = await Listing.findByIdAndDelete(id);
+    
     req.flash("success", "Listing Deleted!!");
 
     res.redirect("/listings");
