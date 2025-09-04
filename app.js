@@ -1,6 +1,6 @@
-if(process.env.NODE_ENV != "production"){
+
 require('dotenv').config();
-}
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -37,7 +37,7 @@ main()
     });
 
 async function main() {
-    await mongoose.connect(dbUrl);
+    await mongoose.connect(process.env.ATLASDB_URL || dbUrl);
 }
 
 app.set("view engine", "ejs");
@@ -124,6 +124,6 @@ app.use((err, req, res, next) => {
 });
 
 
-app.listen(8080, () => {
+app.listen(process.env.PORT || 8080 , () => {
     console.log("server running");
 });
