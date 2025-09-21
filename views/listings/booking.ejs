@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luxury Stay Booking</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 900px;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .content {
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .booking-form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #333;
+    }
+
+    .input-with-icon {
+      position: relative;
+    }
+
+    .input-with-icon i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #4776E6;
+    }
+
+    .input-with-icon input,
+    .input-with-icon select {
+      width: 100%;
+      padding: 15px 15px 15px 45px;
+      border: 2px solid #e1e5ee;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    .input-with-icon input:focus,
+    .input-with-icon select:focus {
+      border-color: #4776E6;
+      outline: none;
+      box-shadow: 0 0 5px rgba(71, 118, 230, 0.5);
+    }
+
+    .date-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .btn {
+      background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(71, 118, 230, 0.4);
+    }
+
+    .guests-input {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    @media (max-width: 768px) {
+
+      .date-inputs,
+      .guests-input {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  
+  <div class="container">
+    <div class="header">
+      <div>
+         <a href="/listings"
+      style="font-family: 'Poppins', sans-serif; font-weight:700; font-size:2rem;">
+        WanderLust
+    </a>
+      </div>
+      <h1>Book Your Stay</h1>
+      <p>Experience luxury and comfort with our exclusive accommodations</p>
+    </div>
+    
+
+    <div class="content">
+      <form class="booking-form" id="bookingForm">
+        <div class="date-inputs">
+          <div class="form-group">
+            <label for="startDate">Check-In Date</label>
+            <div class="input-with-icon">
+              <i class="fas fa-calendar-alt"></i>
+              <input type="date" id="startDate" name="startDate" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="endDate">Check-Out Date</label>
+            <div class="input-with-icon">
+              <i class="fas fa-calendar-alt"></i>
+              <input type="date" id="endDate" name="endDate" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="guests-input">
+          <div class="form-group">
+            <label for="adults">Adults</label>
+            <div class="input-with-icon">
+              <i class="fas fa-user"></i>
+              <select id="adults" name="adults">
+                <option value="1">1 Adult</option>
+                <option value="2" selected>2 Adults</option>
+                <option value="3">3 Adults</option>
+                <option value="4">4 Adults</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="children">Children</label>
+            <div class="input-with-icon">
+              <i class="fas fa-child"></i>
+              <select id="children" name="children">
+                <option value="0" selected>No Children</option>
+                <option value="1">1 Child</option>
+                <option value="2">2 Children</option>
+                <option value="3">3 Children</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="roomType">Room Type</label>
+          <div class="input-with-icon">
+            <i class="fas fa-bed"></i>
+            <select id="roomType" name="roomType">
+              <option value="standard">Standard Room</option>
+              <option value="deluxe">Deluxe Room</option>
+              <option value="suite">Executive Suite</option>
+              <option value="presidential">Presidential Suite</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="button" class="btn" id="payBtn">Complete Booking <i class="fas fa-arrow-right"></i></button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script>
+    document.getElementById('payBtn').addEventListener('click', async (e) => {
+      e.preventDefault();
+
+      const amountINR = 1000; 
+
+      // create order
+      const resp = await fetch('/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: amountINR })
+      });
+      const data = await resp.json();
+      if (!data.order) {
+        return alert('Error creating order. Please try again.');
+      }
+
+      const options = {
+        key: data.key,
+        amount: data.order.amount,
+        currency: data.order.currency,
+        name: "Luxury Stay",
+        description: `Booking: ${document.getElementById('roomType').value}`,
+        order_id: data.order.id,
+        handler: async function (response) {
+          // send to server to verify
+          const verifyResp = await fetch('/verify-payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(response)
+          });
+          const verifyData = await verifyResp.json();
+          if (verifyData.status === 'success') {
+            alert('Payment successful!');
+            window.location.href = "/listings";
+          } else {
+            alert('Payment verification failed: ' + (verifyData.error || ''));
+          }
+        }
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.open();
+    });
+  </script>
+</body>
+
+</html>

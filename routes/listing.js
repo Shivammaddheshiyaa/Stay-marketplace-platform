@@ -23,13 +23,28 @@ const validateListing = (req, res, next) => {
     }
 };
 
-
 router.get("/", async (req, res) => {
-    const allListings = await Listing.find({});
-    res.render("listings/index.ejs", { allListings });
+ let {q} = req.query;
+  if(q){
+   let searchListings = await Listing.find({ location: { $regex: q, $options: "i" } });
 
+   if(searchListings.length>0){
+     res.render("listings/index.ejs" , {allListings : searchListings});
+   }
+   else{
+    let allListings = await Listing.find();
+   res.render("listings/index.ejs" , {allListings})
+   }
+  }
+  else{
+   let allListings = await Listing.find();
+   res.render("listings/index.ejs" , {allListings})
+  }
 });
 
+router.get('/booking', (req, res) => {
+  res.render("listings/booking.ejs");
+});
 
 //new route
 
@@ -37,6 +52,7 @@ router.get("/new", isLoggedIn, (req, res) => {
    
     res.render("listings/new.ejs");
 });
+
 
 
 

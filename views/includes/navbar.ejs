@@ -21,14 +21,17 @@
       </div>
 
 
-      <div class="navbar-nav mx-auto">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search destination"
-            style="border-radius: 25px; font-size:0.9rem; padding:0.45rem 1rem;" />
-          <button class="btn btn-primary px-3" type="submit"
-            style="border-radius: 25px; font-weight:500;">Search</button>
-        </form>
+
+       <div class="navbar-nav mx-auto">
+      <form method="get" action="/listings" class="d-flex" role="search">
+        <input class="form-control me-2" type="search" name="q" placeholder="Search destination"
+          style="border-radius: 25px; font-size:0.9rem; padding:0.45rem 1rem;" />
+        <button class="btn btn-primary px-3" type="submit" style="border-radius: 25px; font-weight:500;">
+          Search
+        </button>
+      </form>
       </div>
+
 
 
       <div class="navbar-nav ms-auto">

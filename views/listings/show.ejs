@@ -24,6 +24,11 @@
                 <%= listing.country %>
             </p>
         </div>
+       <br>
+        <form action="/listings/booking" method="get">
+  <button type="submit" class="btn btn-primary">Book Now</button>
+</form>
+
 
         <% if( currUser && currUser._id.equals(listing.owner._id)) { %>
             <div class="btns mb-3">
@@ -115,6 +120,8 @@
             </div>
         </div>
     </div>
+
+
 
     <div class="col-12 col-md-8 offset-md-2 p-3">
         <h3>Where you'll be</h3>
