@@ -42,8 +42,8 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get('/booking', (req, res) => {
-  res.render("listings/booking.ejs");
+router.get('/booking',isLoggedIn, async(req, res) => {
+ res.render("listings/booking.ejs");
 });
 
 //new route
