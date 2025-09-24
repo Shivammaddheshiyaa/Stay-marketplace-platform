@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: wanderlust-app
+    restart: always
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+      - /app/node_modules
+

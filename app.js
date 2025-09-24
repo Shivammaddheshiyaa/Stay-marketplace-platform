@@ -14,12 +14,11 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 
-// routers
+
 const listingRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
-// DB connection
 const dbUrl = process.env.ATLASDB_URL;
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
@@ -34,13 +33,12 @@ mongoose.connect(dbUrl, {
 
 const app = express();
 
-// view engine & static files
 app.engine('ejs', ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 
-// parsing
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
@@ -154,6 +152,6 @@ app.use((err, req, res, next) => {
 });
 
 const port = process.env.PORT || 8080;
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`Server running on port ${port}`);
 });

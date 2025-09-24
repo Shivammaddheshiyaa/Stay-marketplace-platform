@@ -130,7 +130,7 @@ card-text p {
 
 @media (max-width: 768px) {
   #navbarNavAltMarkup.show {
-    background-color: #e3f2fd;
+    background-color: white;
     border-radius: 8px;
     padding: 10px;
   }
